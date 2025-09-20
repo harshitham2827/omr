@@ -1,0 +1,25 @@
+# --- OMR Demo Notebook ---
+
+import sys
+sys.path.append("../src")
+
+from preprocess import load_and_preprocess
+from detect_heu import detect_answers
+from scorer import score
+
+# Step 1: Preprocess image
+img, thresh = load_and_preprocess("../data/raw_images/student1.png")
+
+import matplotlib.pyplot as plt
+plt.imshow(thresh, cmap="gray")
+plt.title("Thresholded Image")
+plt.show()
+
+# Step 2: Detect answers using heuristic method
+answers = detect_answers("../data/raw_images/student1.png",
+                         "../data/templates/template1.csv")
+print("Detected Answers:", answers)
+
+# Step 3: Score with answer key
+final_score = score(answers, "../data/answer_keys/key1.csv")
+print("Final Score:", final_score)
